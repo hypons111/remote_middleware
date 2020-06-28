@@ -9,16 +9,12 @@ function next() {
 
 
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   let reqTime = new Date();
-  console.log(`${reqTime.getFullYear()}-${reqTime.getMonth()}-${reqTime.getDate()} ${reqTime.getHours()}:${reqTime.getMinutes()}:${reqTime.getSeconds()}:${reqTime.getMilliseconds()}`)
-
-  console.log(`${req.method} from localhost${req.path}`)
-
   let resTime = new Date();
-  console.log(`${resTime.getFullYear()}-${resTime.getMonth()}-${resTime.getDate()} ${resTime.getHours()}:${resTime.getMinutes()}:${resTime.getSeconds()}:${resTime.getMilliseconds()}`)
+  const mS = resTime.getMilliseconds() - reqTime.getMilliseconds()
 
-  console.log('total time:', resTime.getMilliseconds() - reqTime.getMilliseconds(), 'ms')
+  console.log(`${reqTime.getFullYear()}-${reqTime.getMonth()}-${reqTime.getDate()} ${reqTime.getHours()}:${reqTime.getMinutes()}:${reqTime.getSeconds()} | ${req.method} from ${req.path} | total time: ${mS} ms`)
 
   next()
 })
