@@ -2,20 +2,17 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-function next() {
-  let now = new Date();
-  console.log(`${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`)
-}
-
 
 
 app.use((req, res, next) => {
-  let reqTime = new Date();
-  let resTime = new Date();
-  const mS = resTime.getMilliseconds() - reqTime.getMilliseconds()
+  let reqTime = new Date()
 
-  console.log(`${reqTime.getFullYear()}-${reqTime.getMonth()}-${reqTime.getDate()} ${reqTime.getHours()}:${reqTime.getMinutes()}:${reqTime.getSeconds()} | ${req.method} from ${req.path} | total time: ${mS} ms`)
-
+  res.on("finish", () => {
+    statusCode = 400
+    resTime = new Date()
+    const mS = resTime.getMilliseconds() - reqTime.getMilliseconds()
+    console.log(`${reqTime.getFullYear()}-${reqTime.getMonth()}-${reqTime.getDate()} ${reqTime.getHours()}:${reqTime.getMinutes()}:${reqTime.getSeconds()} | ${req.method} from ${req.path} | total time: ${mS} ms`)
+  })
   next()
 })
 
@@ -33,7 +30,7 @@ app.get('/:id', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  res.send('新增一筆  Todo')
+  res.send('新增一筆  Todos')
 })
 
 app.listen(port, () => {
